@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description"
+		content="Konsultacja online z flebologiem, lek. Katarzyną Popowicz. Uzyskaj spersonalizowane zalecenia dotyczące leczenia żylaków i przywracania zdrowia Twoich nóg." />
+    <title>Konsultacja online — Reustep</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Etapy konsultacji">
+        <div class="brand">
+          <span class="brand-mark">✚</span>
+          <div>
+            <strong>Centrum konsultacji</strong
+            ><small>Panel informacyjny</small>
+          </div>
+        </div>
+        <div class="doctor-profile">
+          <div class="doctor-avatar">
+            <img src="images/doc.jpg" alt="">
+          </div>
+          <div>
+            <strong>Lek. Katarzyna Popowicz</strong
+            ><span>Specjalizacja: Flebologia</span>
+          </div>
+        </div>
+        <div class="sidebar-label">POSTĘP</div>
+        <nav class="steps" id="steps">
+          <div class="step active" data-stage="0">
+            <span class="step-index">1</span>
+            <div>
+              <strong>Powitanie</strong><small>Rozpoczęcie rozmowy</small>
+            </div>
+          </div>
+          <div class="step" data-stage="1">
+            <span class="step-index">2</span>
+            <div>
+              <strong>Twoje objawy</strong><small>3 krótkie pytania</small>
+            </div>
+          </div>
+          <div class="step" data-stage="2">
+            <span class="step-index">3</span>
+            <div>
+              <strong>Podsumowanie</strong><small>Informacje i zalecenia</small>
+            </div>
+          </div>
+          <div class="step" data-stage="3">
+            <span class="step-index">4</span>
+            <div><strong>Oferta</strong><small>Bonus i zamówienie</small></div>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="main-panel">
+        <header class="chat-header">
+          <div class="chat-header-info">
+            <div class="doctor-avatar small">
+              <img src="images/doc.jpg" alt="">
+            </div>
+            <div>
+              <h1>Konsultacja online</h1>
+              <p>
+                <span class="online-dot"></span> Asystent konsultacji
+              </p>
+            </div>
+          </div>
+          <div class="header-status" id="headerStatus">Etap 1 z 4</div>
+        </header>
+        <div class="chat-scroll" id="chatScroll" aria-live="polite">
+          <div class="date-divider" id="dateDivider">Dzisiaj</div>
+          <div class="chat-stream" id="chatStream"></div>
+          <section
+            class="question-section"
+            id="questionSection"
+            hidden
+            aria-label="Pytania konsultacyjne"
+          >
+            <div class="question-top">
+              <span class="question-kicker">KRÓTKI WYWIAD</span
+              ><span class="question-counter" id="questionCounter">1 / 3</span>
+            </div>
+            <div class="question-progress">
+              <div id="questionProgress"></div>
+            </div>
+            <div class="question-viewport" id="questionViewport">
+              <div class="question-track" id="questionTrack"></div>
+            </div>
+            <div class="question-footer">
+              <span>Wybierz jedną odpowiedź</span
+              ><button
+                id="backQuestion"
+                type="button"
+                class="back-question"
+                hidden
+              >
+                ← Poprzednie
+              </button>
+            </div>
+          </section>
+          <section class="loading-card" id="loadingCard" hidden>
+            <div class="loading-icon">✦</div>
+            <h2>Przygotowujemy podsumowanie</h2>
+            <p>Porządkujemy wybrane odpowiedzi…</p>
+            <div class="loading-bar"><span></span></div>
+          </section>
+          <section class="reward-section" id="rewardSection" hidden>
+            <span class="eyebrow">BONUS PROMOCYJNY</span>
+            <h2>Odkryj swój rabat</h2>
+            <p>Każda karta zawiera ten sam gwarantowany rabat 70%.</p>
+            <div class="reward-cards" id="rewardCards">
+              <button
+                class="reward-card"
+                type="button"
+                aria-label="Odkryj kartę 1">
+                <span class="reward-inner"
+                  ><span class="reward-front"
+                    ><b>✦</b><small>KARTA 01</small></span
+                  ><span class="reward-back"
+                    ><small>TWÓJ RABAT</small><strong>–70%</strong></span
+                  ></span
+                ></button
+              ><button
+                class="reward-card"
+                type="button"
+                aria-label="Odkryj kartę 2"
+              >
+                <span class="reward-inner"
+                  ><span class="reward-front"
+                    ><b>✦</b><small>KARTA 02</small></span
+                  ><span class="reward-back"
+                    ><small>TWÓJ RABAT</small><strong>–70%</strong></span
+                  ></span
+                ></button
+              ><button
+                class="reward-card"
+                type="button"
+                aria-label="Odkryj kartę 3"
+              >
+                <span class="reward-inner"
+                  ><span class="reward-front"
+                    ><b>✦</b><small>KARTA 03</small></span
+                  ><span class="reward-back"
+                    ><small>TWÓJ RABAT</small><strong>–70%</strong></span
+                  ></span
+                >
+              </button>
+            </div>
+            <p class="reward-feedback" id="rewardFeedback">
+              Kliknij jedną z kart
+            </p>
+          </section>
+          <section class="order-section" id="orderSection" hidden>
+            <div class="order-head">
+              <div class="order-head-content">
+                <span class="eyebrow">TWOJA OFERTA</span>
+                <h2>Zamów Reustep</h2>
+                <p>Przed wysłaniem sprawdź cenę i dane kontaktowe.</p>
+              </div>
+            
+              <div class="order-timer">
+                <span class="order-timer-label">Oferta kończy się za</span>
+            
+                <div class="order-countdown" id="orderCountdown">
+                  <span id="timerHours">00</span>
+                  <span class="timer-colon">:</span>
+                  <span id="timerMinutes">10</span>
+                  <span class="timer-colon">:</span>
+                  <span id="timerSeconds">00</span>
+                </div>
+              </div>
+            </div>
+            <div class="order-grid">
+              <div class="product-panel">
+                <div class="product-art">
+                  <img
+                    src="images/prod.png"
+                    alt="Opakowanie Reustep"
+                    onerror="
+                      this.style.display = 'none';
+                      this.nextElementSibling.style.display = 'grid';
+                    "
+                  />
+                  <div class="image-fallback" style="display: none">
+                    Reustep
+                  </div>
+                </div>
+                <div class="price">
+                  <span class="old-price">457 PLN</span><strong>137 PLN</strong
+                  ><small>Oszczędzasz 320 PLN</small>
+                </div>
+              </div>
+              <form
+                class="order-fields"
+                id="orderFormElement"
+                action="order.php"
+                method="post"
+              >
+                <label for="orderName">Imię</label
+                ><input
+                  id="orderName"
+                  name="name"
+                  type="text"
+                  autocomplete="given-name"
+                  placeholder="Twoje imię"
+                  required
+                  minlength="2"
+                /><label for="phone">Numer telefonu</label
+                ><input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  placeholder="Numer telefonu"
+                  required
+                  minlength="9"
+                /><button class="primary-button" type="submit">
+                  Zamów za 137 PLN <span>→</span></button
+                ><small
+                  >Dane wykorzystamy wyłącznie do obsługi zamówienia. Szczegóły
+                  przetwarzania danych powinny znaleźć się w polityce
+                  prywatności.</small
+                >
+                <p id="formFeedback" class="form-feedback" role="status"></p>
+              </form>
+            </div>
+          </section>
+        </div>
+        <footer class="chat-footer">
+          <span class="footer-icon">✚</span
+          ><span
+            >Oficjalna strona</span
+          ><span class="footer-lock">© 2026 Wszelkie prawa zastrzeżone</span>
+        </footer>
+      </main>
+    </div>
+    <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+    <div
+      class="bonus-modal"
+      id="bonusModal"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bonusModalTitle"
+    >
+      <div class="bonus-modal-card">
+        <div class="bonus-modal-symbol" aria-hidden="true">✦</div>
+        <span class="eyebrow">TWÓJ BONUS</span>
+        <h2 id="bonusModalTitle">Odbierz swój bonus 70%</h2>
+        <p>Twoja karta została odkryta. Potwierdź, aby zobaczyć ofertę.</p>
+        <button type="button" class="primary-button" id="claimBonus">
+          Odbierz bonus 70% →
+        </button>
+      </div>
+    </div>
+    <script>
+      const VARS = {
+        today: "Dzisiaj",
+        docName: "Lek. Katarzyna Popowicz",
+        docAvatar: "images/doc.jpg",
+        MSGS: {
+          currentQuestion: "Świetny wybór! Kontynuujemy proces diagnostyki...",
+          wheelSection: "🎰 Zakręć kołem fortuny!",
+          wheelPopup: "🎉 Gratulacje! Otrzymujesz 70% zniżki!",
+          chatContainer: "⏰ Oferta ważna tylko przez ograniczony czas!",
+          timeLeft: {
+            fiveMin: "⚠️ Zostało już tylko 5 minut!",
+            oneMin: "🔥 Ostatnia minuta! Nie przegap swojej zniżki!",
+            end: "⏰ Czas minął! Zniżka nie jest już dostępna.",
+          },
+          validateForm: {
+            name: "❌ Wprowadź poprawne imię",
+            phone: "❌ Wprowadź poprawny numer telefonu",
+            submit:
+              "✅ Zamówienie zostało wysłane! Prosimy poczekać na telefon od naszego konsultanta.",
+          },
+          socialProof: [
+            "Anna z Warszawy właśnie zamówiła krem Reustep z 70% zniżką",
+            "Marta z Krakowa otrzymała 70% zniżki na zamówienie Reustep",
+            "Jan z Łodzi dzięki Reustep pozbył się bólu nóg już w kilka dni",
+            "Jarosława z Poznania poleca krem Reustep – widoczne rezultaty już po 10 dniach",
+            "Danuta z Wrocławia właśnie aktywowała 70% zniżki na Reustep",
+            "Iwona z Gdańska jest zadowolona z działania Reustep – opuchlizna zniknęła w tydzień",
+            "Katarzyna ze Szczecina właśnie wygrała 70% zniżki na krem Reustep",
+            "Krystyna z Bydgoszczy rozpoczęła już kurację z Reustep – lżejsze i zdrowsze nogi!",
+          ],
+          welcome: "👋 Witamy! Bezpłatna diagnostyka właśnie się rozpoczyna...",
+        },
+        TXTS: {
+          submitBtn: "ZAMÓWIENIE WYSŁANE",
+        },
+      };
+
+const MESSAGES = [{
+			text: 'Dzień dobry 👋 Pozwólcie, że się przedstawię: Nazywam się lek. Katarzyna Popowicz, jestem flebologiem z ponad 25-letnim doświadczeniem w leczeniu żylaków.',
+			type: 'doctor',
+		},
+		{
+			text: 'Nawet nie wyobrażacie sobie Państwo, jak podstępne potrafią być żylaki.',
+			type: 'doctor',
+		},
+		{
+			text: 'Na początku pojawia się jedynie lekki ból, zmęczenie lub opuchlizna pod koniec dnia. Wydaje się, że to nic poważnego... Jednak dokładnie tak rozpoczyna się uszkodzenie naczyń krwionośnych. Im dłużej odkładamy leczenie, tym bardziej żylaki postępują wewnętrznie, często w ukrytej formie, gdy na zewnątrz prawie nic nie jest widoczne.',
+			type: 'doctor',
+		},
+		{
+			text: 'Z każdym dniem krążenie krwi się pogarsza, naczynia krwionośne się rozszerzają i pojawiają się mikrozakrzepy. Jeśli nie zatrzymamy tego procesu, może to doprowadzić do poważnej zakrzepicy, która w niektórych przypadkach stanowi bezpośrednie zagrożenie dla życia.',
+			type: 'doctor',
+		},
+		{
+			text: '⚠️ Nie ma jednak powodu do paniki. Czasy, kiedy jedyną opcją była operacja, bezpowrotnie minęły. Dziś istnieje alternatywna metoda leczenia, którą można przeprowadzić w domu — bez bólu, zastrzyków i uszczerbku na zdrowiu.',
+			type: 'doctor',
+		},
+		{
+			text: 'Pomaga ona wzmocnić ściany naczyń krwionośnych, łagodzi stany zapalne i w pełni przywraca prawidłowe krążenie krwi w żyłach. Aby dowiedzieć się, czy grozi Państwu ryzyko zakrzepicy i czy należy natychmiast rozpocząć leczenie, prosimy odpowiedzieć na kilka krótkich pytań.',
+			type: 'doctor',
+		},
+		{
+			text: 'Na tej podstawie będę mogła ocenić stan Państwa żył i przedstawić spersonalizowane zalecenia dotyczące dalszych kroków.',
+			type: 'doctor',
+		},
+		{
+			text: 'Jest to całkowicie bezpłatne i zajmie mniej niż minutę.',
+			type: 'doctor',
+		},
+		{
+			text: 'Czy pod koniec dnia odczuwasz ciężkość nóg, zmęczenie lub pulsowanie?',
+			type: 'doctor',
+			choices: ['Tak, prawie codziennie', 'Czasami, po wysiłku', 'Nie, nie zauważam tego'],
+		},
+		{
+			text: 'Czy zauważasz wieczorem opuchliznę wokół kostek lub ślady po ściągaczach skarpetek?',
+			type: 'doctor',
+			choices: ['Tak, to już stały problem', 'Zdarza się to czasami', 'Nie, nigdy'],
+		},
+		{
+			text: 'Czy masz widoczną siatkę naczynek, tzw. pajączki lub nawet wypukłe żylaki?',
+			type: 'doctor',
+			choices: ['Tak, są coraz bardziej widoczne', 'Mam małą siatkę pajączków', 'Jeszcze nie, ale nogi często mnie bolą'],
+		},
+		{
+			text: 'Czy zdarza się, że w nocy budzą Cię skurcze lub intensywne mrowienie w nogach?',
+			type: 'doctor',
+			choices: ['Tak, regularnie', 'Rzadko', 'Nie, nigdy'],
+		},
+		{
+			text: 'Czy odczuwasz w nogach pieczenie, ciepło lub uczucie rozpierania, jakby miały pęknąć od napięcia?',
+			type: 'doctor',
+			choices: ['Tak, często', 'Czasami', 'Nie, nie czuję tego'],
+		},
+		{
+			text: 'Twoja obecna waga znajduje się...',
+			type: 'doctor',
+			choices: [
+				'W granicach normy',
+				'Jest lekko podwyższona',
+				'Jest znacznie powyżej normy',
+				'Trudno powiedzieć, dawno się nie ważyłem/am',
+			],
+		},
+		{
+			text: 'Jak spędzasz swój dzień?',
+			type: 'doctor',
+			choices: [
+				'Długo stoję lub siedzę bez ruchu',
+				'W ciągu dnia dużo się ruszam',
+				'Prowadzę głównie siedzący tryb życia (biuro, komputer, samochód)',
+			],
+		},
+		{
+			text: 'Ile czasu w ciągu dnia obciążasz swoje nogi, a ile poświęcasz na odpoczynek lub rozgrzewkę?',
+			type: 'doctor',
+			choices: [
+				'Przez większość dnia stoję lub chodzę, bez odpoczynku',
+				'Pracuję dużo na stojąco, ale czasami robię krótką rozgrzewkę',
+				'Ruszam się niewiele, praca w biurze, brak rozgrzewki czy sportu',
+				'Regularnie ćwiczę nogi lub robię gimnastykę',
+			],
+		},
+		{
+			text: 'Twój wiek:',
+			type: 'doctor',
+			choices: ['Mniej niż 30 lat', '31–45 lat', '46–60 lat', 'Ponad 60 lat'],
+		},
+		{
+			text: 'Czy ktoś w Twojej rodzinie miał żylaki, zakrzepicę lub przechodził operację żył?',
+			type: 'doctor',
+			choices: [
+				'Tak, bliscy krewni',
+				'Tak, ale w łagodnej formie',
+				'Nie, nic mi o tym nie wiadomo',
+				'Dziękuję za odpowiedzi.',
+			],
+		},
+		{
+			text: 'Na podstawie wyników diagnostyki, w Twoim układzie żylnym rozpoczęły się już zmiany wskazujące na zaburzenia przepływu krwi i rozwój żylaków.',
+			type: 'doctor',
+		},
+		{
+			text: 'To nie jest zwykłe „zmęczenie nóg” – to pierwszy kliniczny objaw schorzenia, które ma tendencję do postępowania.',
+			type: 'doctor',
+		},
+		{
+			text: 'Gdy krew zalega w żyłach, wzrasta ciśnienie wewnętrzne w naczyniach krwionośnych, a ich ściany rozciągają się i tracą elastyczność.',
+			type: 'doctor',
+		},
+		{
+			text: 'Na tym etapie mogą już tworzyć się mikrozakrzepy – skrzepy krwi, które zatykają naczynia i zaburzają odżywienie tkanek.',
+			type: 'doctor',
+		},
+		{
+			text: 'Bez podjęcia leczenia zmiany te przechodzą w formę przewlekłą, w której:<br/>🔹 żyły ulegają deformacji,<br/>🔹 pojawiają się bolesne żylaki (węzły),<br/>🔹 wzrasta ryzyko zakrzepicy i zatorowości płucnej – stanu bezpośrednio zagrażającego życiu.',
+			type: 'doctor',
+		},
+		{
+			text: 'Nie mówię tego, aby Cię wystraszyć, ale aby uświadomić Ci powagę sytuacji – żylaki same z siebie nie znikną.',
+			type: 'doctor',
+		},
+		{
+			text: 'Dobra wiadomość jest jednak taka, że zwracasz się do mnie w odpowiednim momencie. Na tym etapie wciąż można zatrzymać ten proces i zregenerować naczynia krwionośne bez operacji i zastrzyków.',
+			type: 'doctor',
+		},
+		{
+			text: 'Mogę przygotować dla Ciebie indywidualny plan kuracji, który pomoże:<br/>– rozpuścić mikrozakrzepy,<br/>– złagodzić stan zapalny,<br/>– przywrócić elastyczność żył,<br/>– zmniejszyć bolesność, ciężkość i opuchliznę.<br/>W Twoim przypadku kluczowe jest zatrzymanie procesu zapalnego w żyłach, zmniejszenie obrzęków, rozpuszczenie mikrozakrzepów i przywrócenie napięcia naczyń krwionośnych.',
+			type: 'doctor',
+		},
+		{
+			text: 'Dlatego polecam Ci krem Reustep – nowoczesny, naturalny produkt, który działa kompleksowo i pozwala zatrzymać dalszy rozwój żylaków bez interwencji chirurgicznej.',
+			type: 'doctor',
+		},
+		{
+			text: '<img src="images/prod.png" class="product-image" alt="Reustep produkt" loading="lazy">',
+			type: 'doctor',
+		},
+		{
+			text: '🩺 Jak działa Reustep:<br/>– wnika głęboko w tkanki i regeneruje ściany naczyń krwionośnych;<br/>– wzmacnia naczynia włosowate, zmniejszając kruchość i rozszerzanie się żył;<br/>– likwiduje ból, uczucie pieczenia i ciężkości w nogach;<br/>– łagodzi stan zapalny i opuchliznę już od pierwszych dni stosowania;<br/>– usprawnia mikrokążenie krwi i zapobiega powstawaniu nowych zakrzepów.',
+			type: 'doctor',
+		},
+		{
+			text: '🧬 Główne składniki aktywne Reustep:<br/>🌿 Ekstrakt z melisy – koi podrażnioną skórę, zmniejsza obrzęki.<br/>🌰 Ekstrakt z nasion kasztanowca – wzmacnia ściany żył i łagodzi stany zapalne.<br/>🌊 Ekstrakt z alg – wzbogaca naczynia krwionośne w mikroelementy (jod, magnez).<br/>🍃 Gotu Kola (Wąkrota azjatycka) – zwiększa elastyczność naczyń i stymuluje regenerację tkanek.<br/>🌱 Ekstrakt z korzenia łopianu – zmniejsza stan zapalny, oczyszcza i tonizuje naczynia krwionośne.',
+			type: 'doctor',
+		},
+		{
+			text: 'Każdy składnik działa synergicznie, wzmacniając efekt pozostałych. Dzięki temu Reustep nie tylko likwiduje widoczne objawy żylaków, ale także regeneruje głębokie żyły od wewnątrz, przywracając prawidłowe krążenie.',
+			type: 'doctor',
+		},
+		{
+			text: 'Już po 7–10 dniach stosowania ból, ciężkość i obrzęki wyraźnie ustępują, a po przejściu pełnej kuracji (30–45 dni) żyły wracają do swojego zdrowego stanu.',
+			type: 'doctor',
+		},
+		{
+			text: 'Kurację możesz przeprowadzić bezpiecznie w domu, bez ryzyka i skutków ubocznych.',
+			type: 'doctor',
+		},
+		{
+			text: '⚕️ Reustep to Twoja szansa na zatrzymanie żylaków, zanim przejdą w niebezpieczną formę.',
+			type: 'doctor',
+		},
+		{
+			text: '💬 Ty również możesz cieszyć się zdrowymi i lekkimi nogami, podobnie jak tysiące użytkowników Reustep w całej Europie oraz setki moich pacjentów w kraju, którzy zaufali moim zaleceniom.',
+			type: 'doctor',
+		},
+		{
+			text: 'Zauważyli oni różnicę już po kilku aplikacjach – opuchlizna ustąpiła, ból zniknął, a skóra stała się czysta, wolna od popękanych naczynek.',
+			type: 'doctor',
+		},
+		{
+			text: '<img src="images/q1.jpg" alt="Wyniki 1. klienta" class="before-after-image" loading="lazy" style="border-radius: 0px 16px 16px 16px;">',
+			type: 'doctor',
+		},
+		{
+			text: '<img src="images/q2.jpg" alt="Wyniki 2. klienta" class="before-after-image" loading="lazy" style="border-radius: 0px 16px 16px 16px;">',
+			type: 'doctor',
+		},
+		{
+			text: '<img src="images/q3.jpg" alt="Wyniki 3. klienta" class="before-after-image" loading="lazy" style="border-radius: 0px 16px 16px 16px;">',
+			type: 'doctor',
+		},
+		{
+			text: 'Teraz widzisz już sam, że żylaki to nie tylko problem estetyczny, ale poważna choroba, która pogarsza się z roku na rok.',
+			type: 'doctor',
+		},
+		{
+			text: 'Masz przed sobą dwie drogi:<br/>❌ czekać, aż leczenie stanie się kosztowne i skomplikowane,<br/>✅ albo zacząć działać natychmiast – dopóki naczynia krwionośne można jeszcze w pełni zregenerować.',
+			type: 'doctor',
+		},
+		{
+			text: '💙 I na koniec dobra wiadomość: dzisiaj możesz otrzymać aż do 70% zniżki na krem Reustep jako uczestnik diagnostyki online.',
+			type: 'doctor',
+		},
+		{
+			text: '🌀 Spróbuj swojego szczęścia! Zakręć kołem fortuny poniżej i sprawdź, jaką zniżkę przygotował dla Ciebie system.',
+			type: 'doctor',
+		},
+		{
+			text: '🎁 Wielu pacjentów wylosowało już maksymalną zniżkę 70% – być może dzisiaj szczęście uśmiechnie się również do Ciebie!',
+			type: 'doctor',
+		},
+		{
+			text: '👉 Rozpocznij kurację już teraz i zabezpiecz swoją zniżkę, póki zmiany w żyłach są jeszcze całkowicie odwracalne.',
+			type: 'doctor',
+			showWheel: true,
+		},
+		];
+
+      const UI_TEXT = {
+        questionLabel: "KRÓTKI WYWIAD",
+        chooseAnswer: "Wybierz jedną odpowiedź",
+        loadingTitle: "Przygotowujemy podsumowanie",
+        loadingDescription: "Porządkujemy wybrane odpowiedzi…",
+        imageFallback: "Zdjęcie produktu",
+        closeToast: "Zamknij powiadomienie",
+        stagePrefix: "Etap",
+        stageSeparator: "z",
+        dateLocale: "pl-PL",
+        rewardReady: "Gratulacje! Odkryto rabat 70%.",
+        nextStageNotice: "Przygotowujemy podsumowanie odpowiedzi…",
+        typingSpeed: 420,
+        typingPause: 1150,
+        analysisDuration: 2600,
+        bonusRevealDelay: 900,
+        notificationEnabled: true,
+        socialProofEnabled: false,
+        promotionTimeAlertsEnabled: false,
+        notificationEnabled: true,
+        socialProofEnabled: true,
+        socialProofMinDelay: 20000,
+        socialProofMaxDelay: 35000,
+        socialProofDuration: 5000,
+      };
+    </script>
+  </body>
+</html>
