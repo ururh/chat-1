@@ -9,6 +9,8 @@ const answers = [];
 let questionIndex = 0;
 let answerLocked = false;
 let finished = false;
+let reviewMode = false;
+let reviewExpanded = false;
 let rewardUsed = false;
 let typingActive = false;
 
@@ -183,20 +185,186 @@ function initQuestions() {
   updateQuestionUI();
 }
 
+function updateQuestionHeight() {
+  const section = el('questionSection');
+  const details = el('questionDetails');
+  const viewport = el('questionViewport');
+  const track = el('questionTrack');
+
+  if (!section || !viewport || !track) return;
+  if (section.hidden) return;
+  if (details && details.hidden) return;
+
+  const slides = track.querySelectorAll('.question-slide');
+  const activeSlide = slides[questionIndex];
+
+  if (!activeSlide) return;
+
+  viewport.style.height = `${Math.ceil(activeSlide.scrollHeight)}px`;
+}
+
+function initQuestionResize() {
+  window.addEventListener('resize', () => {
+    requestAnimationFrame(updateQuestionHeight);
+  });
+
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(() => {
+      updateQuestionHeight();
+    });
+
+    document.querySelectorAll('.question-slide').forEach(slide => {
+      observer.observe(slide);
+    });
+  }
+}
+
+
 function updateQuestionUI() {
   el('questionTrack').style.transform = `translateX(-${questionIndex * 100}%)`;
-  el('questionCounter').textContent = `${questionIndex + 1} / ${QUESTIONS.length}`;
-  el('questionProgress').style.width = `${(questionIndex + 1) / QUESTIONS.length * 100}%`;
+  el('questionCounter').textContent =
+    `${questionIndex + 1} / ${QUESTIONS.length}`;
+  el('questionProgress').style.width =
+    `${((questionIndex + 1) / QUESTIONS.length) * 100}%`;
   el('backQuestion').hidden = true;
+  requestAnimationFrame(updateQuestionHeight);
 }
+
+function updateReviewNavigation() {
+  const nav = el('questionReviewNav');
+  const counter = el('reviewCounter');
+  const prev = el('reviewPrev');
+  const next = el('reviewNext');
+
+  if (!nav || !counter || !prev || !next) return;
+
+  nav.hidden = !reviewMode;
+
+  if (!reviewMode) return;
+
+  counter.textContent = `${questionIndex + 1} / ${QUESTIONS.length}`;
+
+  prev.disabled = questionIndex === 0;
+  next.disabled = questionIndex === QUESTIONS.length - 1;
+}
+
+function showReviewQuestion(index) {
+  if (!reviewMode || !reviewExpanded) return;
+  if (index < 0 || index >= QUESTIONS.length) return;
+
+  questionIndex = index;
+
+  updateQuestionUI();
+  updateReviewNavigation();
+}
+
+function toggleQuestionReview() {
+  if (!reviewMode) return;
+
+  reviewExpanded = !reviewExpanded;
+
+  const details = el('questionDetails');
+  const summary = el('questionSummary');
+  const action = el('questionSummaryAction');
+
+  details.hidden = !reviewExpanded;
+
+  summary.setAttribute(
+    'aria-expanded',
+    String(reviewExpanded)
+  );
+
+  action.textContent = reviewExpanded
+    ? 'Zwiń ↑'
+    : 'Zobacz ↓';
+
+if (reviewExpanded) {
+  requestAnimationFrame(() => {
+    updateQuestionHeight();
+  });
+  }
+}
+function moveQuestionToChatHistory() {
+  const section = el('questionSection');
+  const stream = el('chatStream');
+
+  if (!section || !stream) return;
+
+  if (section.parentElement !== stream) {
+    stream.appendChild(section);
+  }
+}
+function enableReviewMode() {
+  reviewMode = true;
+  reviewExpanded = false;
+moveQuestionToChatHistory();
+  const section = el('questionSection');
+  const summary = el('questionSummary');
+  const details = el('questionDetails');
+  const footerText = el('questionFooterText');
+
+  section.hidden = false;
+  section.classList.add('review-mode');
+
+  summary.hidden = false;
+  summary.setAttribute('aria-expanded', 'false');
+
+  details.hidden = true;
+
+  if (footerText) {
+    footerText.textContent = 'Twoje zapisane odpowiedzi';
+  }
+
+  document.querySelectorAll('.question-slide').forEach((slide, index) => {
+    const buttons = slide.querySelectorAll('.choice');
+
+    buttons.forEach((button, choiceIndex) => {
+      const selected = answers[index] === choiceIndex;
+
+      button.disabled = true;
+      button.classList.toggle('selected', selected);
+
+      const arrow = button.lastElementChild;
+
+      if (arrow) {
+        arrow.textContent = selected ? '✓' : '';
+      }
+    });
+  });
+
+  questionIndex = 0;
+
+  updateQuestionUI();
+  updateReviewNavigation();
+}
+
+function initQuestionReview() {
+  el('questionSummary')?.addEventListener(
+    'click',
+    toggleQuestionReview
+  );
+
+  el('reviewPrev')?.addEventListener('click', () => {
+    showReviewQuestion(questionIndex - 1);
+  });
+
+  el('reviewNext')?.addEventListener('click', () => {
+    showReviewQuestion(questionIndex + 1);
+  });
+}
+
 
 async function chooseAnswer(index, choiceIndex, button) {
   if (answerLocked || finished || index !== questionIndex) return;
+
   answerLocked = true;
   answers[index] = choiceIndex;
+
   button.classList.add('selected');
   button.lastElementChild.textContent = '✓';
+
   await delay(450);
+
   if (index < QUESTIONS.length - 1) {
     questionIndex++;
     updateQuestionUI();
@@ -204,18 +372,27 @@ async function chooseAnswer(index, choiceIndex, button) {
     scrollToBottom();
     return;
   }
+
   finished = true;
-  el('questionSection').hidden = true;
+
+  enableReviewMode();
+
   el('loadingCard').hidden = false;
+
   setStage(2);
   toast(UI_TEXT.nextStageNotice);
   scrollToBottom();
+
   await delay(UI_TEXT.analysisDuration);
+
   el('loadingCard').hidden = true;
+
   for (const item of FOLLOWUP) {
     await addDoctorMessage(item.text);
   }
+
   el('rewardSection').hidden = false;
+
   setStage(3);
   scrollToBottom();
 }
@@ -292,13 +469,15 @@ function initForm() {
     }
   });
 }
-
+requestAnimationFrame(updateQuestionHeight);
 async function start() {
   el('dateDivider').textContent = VARS.today;
 
-  initQuestions();
-  initReward();
-  initForm();
+initQuestions();
+initQuestionResize();
+initQuestionReview();
+initReward();
+initForm();
 
   toast(VARS.MSGS.welcome);
   scheduleSocialProof();
@@ -310,7 +489,10 @@ async function start() {
 
   el('questionSection').hidden = false;
   setStage(1);
-  scrollToBottom();
+  requestAnimationFrame(() => {
+  updateQuestionHeight();
+    scrollToBottom();
+    });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);

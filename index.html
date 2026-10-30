@@ -34,24 +34,33 @@
           <div class="step active" data-stage="0">
             <span class="step-index">1</span>
             <div>
-              <strong>Powitanie</strong><small>Rozpoczęcie rozmowy</small>
+              <strong>Rozpoczęcie</strong>
+              <small>Wprowadzenie do konsultacji</small>
             </div>
           </div>
+        
           <div class="step" data-stage="1">
             <span class="step-index">2</span>
             <div>
-              <strong>Twoje objawy</strong><small>3 krótkie pytania</small>
+              <strong>Krótki wywiad</strong>
+              <small>Pytania dotyczące samopoczucia</small>
             </div>
           </div>
+        
           <div class="step" data-stage="2">
             <span class="step-index">3</span>
             <div>
-              <strong>Podsumowanie</strong><small>Informacje i zalecenia</small>
+              <strong>Analiza odpowiedzi</strong>
+              <small>Podsumowanie informacji</small>
             </div>
           </div>
+        
           <div class="step" data-stage="3">
             <span class="step-index">4</span>
-            <div><strong>Oferta</strong><small>Bonus i zamówienie</small></div>
+            <div>
+              <strong>Dalsze kroki</strong>
+              <small>Zalecenia i dostępne opcje</small>
+            </div>
           </div>
         </nav>
       </aside>
@@ -74,32 +83,55 @@
         <div class="chat-scroll" id="chatScroll" aria-live="polite">
           <div class="date-divider" id="dateDivider">Dzisiaj</div>
           <div class="chat-stream" id="chatStream"></div>
-          <section
-            class="question-section"
-            id="questionSection"
-            hidden
-            aria-label="Pytania konsultacyjne"
-          >
-            <div class="question-top">
-              <span class="question-kicker">KRÓTKI WYWIAD</span
-              ><span class="question-counter" id="questionCounter">1 / 3</span>
-            </div>
-            <div class="question-progress">
-              <div id="questionProgress"></div>
-            </div>
-            <div class="question-viewport" id="questionViewport">
-              <div class="question-track" id="questionTrack"></div>
-            </div>
-            <div class="question-footer">
-              <span>Wybierz jedną odpowiedź</span
-              ><button
-                id="backQuestion"
-                type="button"
-                class="back-question"
-                hidden
-              >
-                ← Poprzednie
-              </button>
+          <section class="question-section" id="questionSection" hidden aria-label="Pytania konsultacyjne">
+            <button type="button" class="question-summary" id="questionSummary" aria-expanded="false"
+              aria-controls="questionDetails" hidden>
+              <span class="question-summary-left">
+                <span class="question-summary-icon">✓</span>
+          
+                <span class="question-summary-content">
+                  <strong>Twoje odpowiedzi</strong>
+                </span>
+              </span>
+          
+              <span class="question-summary-action" id="questionSummaryAction">
+                Zobacz ↓
+              </span>
+            </button>
+          
+            <div id="questionDetails">
+              <div class="question-top">
+                <span class="question-kicker">KRÓTKI WYWIAD</span>
+                <span class="question-counter" id="questionCounter">1 / 10</span>
+              </div>
+          
+              <div class="question-progress">
+                <div id="questionProgress"></div>
+              </div>
+          
+              <div class="question-viewport" id="questionViewport">
+                <div class="question-track" id="questionTrack"></div>
+              </div>
+          
+              <div class="question-footer">
+                <span id="questionFooterText">Wybierz jedną odpowiedź</span>
+          
+                <div class="question-review-nav" id="questionReviewNav" hidden>
+                  <button type="button" class="review-nav-btn" id="reviewPrev" aria-label="Poprzednie pytanie">
+                    ←
+                  </button>
+          
+                  <span id="reviewCounter">1 / 10</span>
+          
+                  <button type="button" class="review-nav-btn" id="reviewNext" aria-label="Następne pytanie">
+                    →
+                  </button>
+                </div>
+          
+                <button id="backQuestion" type="button" class="back-question" hidden>
+                  ← Poprzednie
+                </button>
+              </div>
             </div>
           </section>
           <section class="loading-card" id="loadingCard" hidden>
